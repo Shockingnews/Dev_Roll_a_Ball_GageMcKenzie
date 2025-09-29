@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - PickUp
+  - Enemy
+  - SpeedBoost
+  - JumpPad
   layers:
   - Default
   - TransparentFX
