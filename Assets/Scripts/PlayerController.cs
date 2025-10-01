@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     private float currentTime;
     public float speed = 0;
     public float speedBoost = 0;
-    public float jumpPad = 10f;
+    public float jumpForce;
+    
 
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
@@ -63,9 +64,10 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("JumpPad"))
         {
-            
+            rb.AddForce(transform.up * jumpForce);
 
         }
+
         if (other.gameObject.CompareTag("SpeedBoost"))
         {
                 timerActive = true;
