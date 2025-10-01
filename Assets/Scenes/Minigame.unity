@@ -159,8 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  speedBoost: 20
-  jumpPad: 0
+  speedBoost: 25
+  jumpPad: 10
   countText: {fileID: 693067212}
   winTextObject: {fileID: 1347522917}
 --- !u!114 &68552585

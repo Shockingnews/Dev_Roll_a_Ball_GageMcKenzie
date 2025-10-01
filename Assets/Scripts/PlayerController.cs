@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
             {
                 timerActive = false;
                 speed = 10;
+                currentTime = 5;
 
             }
 
