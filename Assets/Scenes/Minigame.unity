@@ -159,6 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  speedBoost: 20
+  jumpPad: 0
   countText: {fileID: 693067212}
   winTextObject: {fileID: 1347522917}
 --- !u!114 &68552585
@@ -2704,7 +2706,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

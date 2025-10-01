@@ -14,13 +14,16 @@ public class PlayerController : MonoBehaviour
     private bool timerActive;
     private float currentTime;
     public float speed = 0;
+    public float speedBoost = 0;
+    public float jumpPad = 10f;
 
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentTime = 0;
+        currentTime = 5;
+        
         
         winTextObject.SetActive(false);
         SetCountText();
@@ -40,22 +43,32 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement * speed);
+        
+        TimeSpan time = TimeSpan.FromSeconds(currentTime);
         if (timerActive)
         {
-            currentTime = currentTime + Time.deltaTime;
-        }
-        TimeSpan time = TimeSpan.FromSeconds(currentTime);
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("SpeedBoost"))
-        {
-                timerActive = true;
-            speed = speed * speed;
+            currentTime = currentTime - Time.deltaTime;
+            speed = speedBoost;
             if (currentTime <= 0)
             {
                 timerActive = false;
+                speed = 10;
+
             }
+
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("JumpPad"))
+        {
+            
+
+        }
+        if (other.gameObject.CompareTag("SpeedBoost"))
+        {
+                timerActive = true;
+            
         }
         
         if (other.gameObject.CompareTag("PickUp"))
