@@ -20,12 +20,13 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    public GameObject restartButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentTime = 5;
-        
-        
+
+        restartButton.SetActive(false);
         winTextObject.SetActive(false);
         SetCountText();
         count = 0;
@@ -98,7 +99,9 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
             winTextObject.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+            
         }
     }
     
