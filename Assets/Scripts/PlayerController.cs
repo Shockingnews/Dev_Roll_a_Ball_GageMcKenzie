@@ -21,11 +21,12 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     public GameObject restartButton;
+    public GameObject continueButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentTime = 5;
-
+        continueButton.SetActive(false);
         restartButton.SetActive(false);
         winTextObject.SetActive(false);
         SetCountText();
@@ -89,8 +90,12 @@ public class PlayerController : MonoBehaviour
         countText.text = "Count: " + count.ToString();
         if (count >= 10)
         {
+            
             winTextObject.SetActive(true);
+            continueButton.gameObject.SetActive(true);
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+            
+
         }
     }
 
