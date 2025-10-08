@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - SpeedBoost
   - JumpPad
+  - PickUpPowerUp
   layers:
   - Default
   - TransparentFX

@@ -13,19 +13,24 @@ public class PlayerController : MonoBehaviour
     private float movementY;
     private bool timerActive;
     private float currentTime;
+    private float shieldCurrentTime;
+    private bool shieldTimerActive;
     public float speed = 0;
     public float speedBoost = 0;
     public float jumpForce;
-    
+    public bool Shield = false;
 
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     public GameObject restartButton;
     public GameObject continueButton;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentTime = 5;
+        shieldCurrentTime = 1;
+
         continueButton.SetActive(false);
         restartButton.SetActive(false);
         winTextObject.SetActive(false);
@@ -61,6 +66,20 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        TimeSpan shieldTime = TimeSpan.FromSeconds(shieldCurrentTime);
+        if (shieldTimerActive)
+        {
+            Shield = true;
+            shieldCurrentTime = shieldCurrentTime - Time.deltaTime;
+            if (shieldCurrentTime <= 0)
+            {
+                Shield = false;
+                shieldTimerActive = false;
+                shieldCurrentTime = 1;
+                
+            }
+
+        }
     }
     void OnTriggerEnter(Collider other)
     {
@@ -79,6 +98,14 @@ public class PlayerController : MonoBehaviour
         
         if (other.gameObject.CompareTag("PickUp"))
         {
+            count = count + 1;
+            other.gameObject.SetActive(false);
+            SetCountText();
+        }
+        if (other.gameObject.CompareTag("PickUpPowerUp"))
+        {
+            shieldTimerActive = true;
+            
             count = count + 1;
             other.gameObject.SetActive(false);
             SetCountText();
@@ -103,11 +130,15 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
-            winTextObject.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-            
+
+            if (Shield == false)
+            {
+
+                Destroy(gameObject);
+                winTextObject.gameObject.SetActive(true);
+                restartButton.gameObject.SetActive(true);
+                winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+            }
         }
     }
     
