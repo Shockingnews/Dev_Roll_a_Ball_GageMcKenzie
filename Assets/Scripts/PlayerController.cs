@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 0;
     public float speedBoost = 0;
     public float jumpForce;
-    public bool Shield = false;
+    static bool Shield = false;
 
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentTime = 5;
-        shieldCurrentTime = 1;
+        shieldCurrentTime = 3;
 
         continueButton.SetActive(false);
         restartButton.SetActive(false);
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
             {
                 Shield = false;
                 shieldTimerActive = false;
-                shieldCurrentTime = 1;
+                shieldCurrentTime = 3;
                 
             }
 
