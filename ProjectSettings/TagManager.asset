@@ -9,6 +9,8 @@ TagManager:
   - SpeedBoost
   - JumpPad
   - PickUpPowerUp
+  - Spawner
+  - DeSpawner
   layers:
   - Default
   - TransparentFX

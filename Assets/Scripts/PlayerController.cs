@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     static bool Shield = false;
 
+    
+    public GameObject ChaserNum1; 
+    public GameObject ChaserNum2;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     public GameObject restartButton;
@@ -92,10 +96,23 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("SpeedBoost"))
         {
-                timerActive = true;
-            
+            currentTime = 5;
+            timerActive = true;
+
         }
-        
+        if (other.gameObject.CompareTag("Spawner"))
+        {
+            ChaserNum1.gameObject.SetActive(true);
+            ChaserNum2.gameObject.SetActive(false);
+
+        }
+        if (other.gameObject.CompareTag("DeSpawner"))
+        {
+            ChaserNum1.gameObject.SetActive(false);
+            ChaserNum2.gameObject.SetActive(true);
+
+        }
+
         if (other.gameObject.CompareTag("PickUp"))
         {
             count = count + 1;
