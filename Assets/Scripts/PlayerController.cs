@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     
     private Rigidbody rb;
+    public int countMax;
     private int count;
     private float movementX;
     private float movementY;
@@ -132,7 +133,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 10)
+        if (count >= countMax)
         {
             
             winTextObject.SetActive(true);
