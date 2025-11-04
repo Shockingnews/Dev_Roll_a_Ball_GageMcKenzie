@@ -3081,9 +3081,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd52b84269116f45a3a1feb8c288bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countMax: 10
   speed: 10
   speedBoost: 25
   jumpForce: 650
+  ChaserNum1: {fileID: 0}
+  ChaserNum2: {fileID: 0}
   countText: {fileID: 2011823550}
   winTextObject: {fileID: 957862727}
   restartButton: {fileID: 468731337}
