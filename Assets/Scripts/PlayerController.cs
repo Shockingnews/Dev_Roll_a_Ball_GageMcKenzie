@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private int count;
     private float movementX;
     private float movementY;
+    public float timelasting;
     private bool timerActive;
     private float currentTime;
     private float shieldCurrentTime;
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentTime = 5;
+        currentTime = timelasting;
         shieldCurrentTime = 3;
 
         continueButton.SetActive(false);
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
             {
                 timerActive = false;
                 speed = 10;
-                currentTime = 5;
+                currentTime = timelasting;
 
             }
 

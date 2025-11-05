@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countMax: 13
+  timelasting: 0
   speed: 10
   speedBoost: 50
   jumpForce: 650
