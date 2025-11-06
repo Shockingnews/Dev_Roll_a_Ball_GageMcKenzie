@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("SpeedBoost"))
         {
-            currentTime = 5;
+            currentTime = timelasting;
             timerActive = true;
 
         }
