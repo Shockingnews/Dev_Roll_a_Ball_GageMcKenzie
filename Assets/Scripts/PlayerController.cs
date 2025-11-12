@@ -22,8 +22,10 @@ public class PlayerController : MonoBehaviour
     public float speedBoost = 0;
     public float jumpForce;
     static bool Shield = false;
+    static bool speedPowerUp = false;
+    static bool JumpPowerUp = false;
 
-    
+
     public GameObject ChaserNum1; 
     public GameObject ChaserNum2;
     public TextMeshProUGUI countText;
@@ -52,6 +54,18 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y;
 
     }
+    private void Update()
+    {
+        if (JumpPowerUp == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Vector3 jumpmovement = new Vector3(0.0f, 0.5f, 0.0f);
+                rb.AddForce(jumpmovement * jumpForce);
+                JumpPowerUp = false;
+            }
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -72,6 +86,9 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        
+        
+
         TimeSpan shieldTime = TimeSpan.FromSeconds(shieldCurrentTime);
         if (shieldTimerActive)
         {
@@ -128,6 +145,25 @@ public class PlayerController : MonoBehaviour
             count = count + 1;
             other.gameObject.SetActive(false);
             SetCountText();
+        }
+        if (other.gameObject.CompareTag("speedPowerUp"))
+        {
+            
+
+            count = count + 1;
+            other.gameObject.SetActive(false);
+            SetCountText();
+        }
+        if (other.gameObject.CompareTag("jumpPowerUp"))
+        {
+            
+            
+            count = count + 1;
+            other.gameObject.SetActive(false);
+            JumpPowerUp = true;
+            SetCountText();
+            
+            
         }
     }
 
