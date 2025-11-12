@@ -24,8 +24,10 @@ public class PlayerController : MonoBehaviour
     static bool Shield = false;
     static bool speedPowerUp = false;
     static bool JumpPowerUp = false;
+    static string dashPowerUp = "can't Hit";
+    static int test;
 
-
+    
     public GameObject ChaserNum1; 
     public GameObject ChaserNum2;
     public TextMeshProUGUI countText;
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y;
 
     }
-    private void Update()
+     void Update()
     {
         if (JumpPowerUp == true)
         {
@@ -65,10 +67,38 @@ public class PlayerController : MonoBehaviour
                 JumpPowerUp = false;
             }
         }
+        if (speedPowerUp == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                currentTime = timelasting;
+                timerActive = true;
+                speedPowerUp = false;
+            }
+        }
+        if (dashPowerUp == "can dash") 
+        {
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Vector3 dashmovement = new Vector3(movementX, 0.0f, movementY);
+                rb.AddForce(dashmovement * 999);
+                dashPowerUp = "can hit";
+                test = 2;
+                
+                
+
+
+                
+            }
+            
+
+        }
     }
 
     private void FixedUpdate()
     {
+        
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement * speed);
         
@@ -148,7 +178,7 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("speedPowerUp"))
         {
-            
+            speedPowerUp = true;
 
             count = count + 1;
             other.gameObject.SetActive(false);
@@ -164,6 +194,17 @@ public class PlayerController : MonoBehaviour
             SetCountText();
             
             
+        }
+        if (other.gameObject.CompareTag("dashPowerUp"))
+        {
+
+            test = 1;
+            count = count + 1;
+            other.gameObject.SetActive(false);
+            dashPowerUp = "can dash";
+            SetCountText();
+
+
         }
     }
 
@@ -181,18 +222,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-
+            if (test != 1)
+            {
+                test = 1;
+                dashPowerUp = "can't hit";
+            }
             if (Shield == false)
             {
-
-                Destroy(gameObject);
-                winTextObject.gameObject.SetActive(true);
-                restartButton.gameObject.SetActive(true);
-                winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+                if(dashPowerUp == "can hit")
+                {
+                    Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+                }
+                if(dashPowerUp != "can hit")
+                {
+                    Destroy(gameObject);
+                    winTextObject.gameObject.SetActive(true);
+                    restartButton.gameObject.SetActive(true);
+                    winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+                }
+                
             }
         }
     }

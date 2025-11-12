@@ -12,6 +12,8 @@ TagManager:
   - Spawner
   - DeSpawner
   - jumpPowerUp
+  - speedPowerUp
+  - dashPowerUp
   layers:
   - Default
   - TransparentFX
