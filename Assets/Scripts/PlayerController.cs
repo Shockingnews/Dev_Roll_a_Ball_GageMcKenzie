@@ -226,11 +226,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (test != 1)
-            {
-                test = 1;
-                dashPowerUp = "can't hit";
-            }
+            
             if (Shield == false)
             {
                 if(dashPowerUp == "can hit")
@@ -246,6 +242,32 @@ public class PlayerController : MonoBehaviour
                 }
                 
             }
+        }
+        if (test != 1)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+
+                if (Shield == false)
+                {
+                    if (dashPowerUp == "can hit")
+                    {
+                        Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+                    }
+                    
+                    if (dashPowerUp != "can hit")
+                    {
+                        Destroy(gameObject);
+                        winTextObject.gameObject.SetActive(true);
+                        restartButton.gameObject.SetActive(true);
+                        winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+                    }
+                    test = 1;
+                    dashPowerUp = "can't hit";
+
+                }
+            }
+            
         }
     }
     
