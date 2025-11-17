@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+     
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("JumpPad"))
@@ -207,6 +208,15 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("JumpPad"))
+        {
+            Vector3 jumpmovement = new Vector3(0.0f, 0.5f, 0.0f);
+            rb.AddForce(jumpmovement * jumpForce);
+
+        }
+    }
 
     void SetCountText()
     {
@@ -231,7 +241,7 @@ public class PlayerController : MonoBehaviour
             {
                 if(dashPowerUp == "can hit")
                 {
-                    Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+                    collision.gameObject.SetActive(false);
                 }
                 if(dashPowerUp != "can hit")
                 {
@@ -252,7 +262,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (dashPowerUp == "can hit")
                     {
-                        Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+                        collision.gameObject.SetActive(false);
                     }
                     
                     if (dashPowerUp != "can hit")

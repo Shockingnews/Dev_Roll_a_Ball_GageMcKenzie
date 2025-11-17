@@ -5023,7 +5023,7 @@ MonoBehaviour:
   timelasting: 0
   speed: 10
   speedBoost: 50
-  jumpForce: 850
+  jumpForce: 300
   ChaserNum1: {fileID: 0}
   ChaserNum2: {fileID: 0}
   countText: {fileID: 1510218607}
