@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
     static bool Shield = false;
     static bool speedPowerUp = false;
     static bool JumpPowerUp = false;
-    static string dashPowerUp = "can't Hit";
+    static bool dashPowerUpCanDash = true;
+    static bool dashPowerUpCanHit = true;
     static int test;
 
     
@@ -34,7 +35,8 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
     public GameObject restartButton;
     public GameObject continueButton;
-    
+    static GameObject enemy;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
     }
      void Update()
     {
+        
         if (JumpPowerUp == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -76,14 +79,14 @@ public class PlayerController : MonoBehaviour
                 speedPowerUp = false;
             }
         }
-        if (dashPowerUp == "can dash") 
+        if (dashPowerUpCanDash == true) 
         {
             
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Vector3 dashmovement = new Vector3(movementX, 0.0f, movementY);
                 rb.AddForce(dashmovement * 999);
-                dashPowerUp = "can hit";
+                dashPowerUpCanHit = true;
                 test = 2;
                 
                 
@@ -133,6 +136,11 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        if (dashPowerUpCanDash == false)
+        {
+            dashPowerUpCanHit = false;
+        }
+        
     }
      
     void OnTriggerEnter(Collider other)
@@ -165,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("PickUp"))
         {
+            dashPowerUpCanDash = false;
             count = count + 1;
             other.gameObject.SetActive(false);
             SetCountText();
@@ -202,7 +211,7 @@ public class PlayerController : MonoBehaviour
             test = 1;
             count = count + 1;
             other.gameObject.SetActive(false);
-            dashPowerUp = "can dash";
+            dashPowerUpCanDash = true;
             SetCountText();
 
 
@@ -226,8 +235,9 @@ public class PlayerController : MonoBehaviour
             
             winTextObject.SetActive(true);
             continueButton.gameObject.SetActive(true);
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            
+            GameObject enemy = GameObject.FindWithTag("Enemy");
+            Destroy(enemy);
+
 
         }
     }
@@ -239,11 +249,11 @@ public class PlayerController : MonoBehaviour
             
             if (Shield == false)
             {
-                if(dashPowerUp == "can hit")
+                if(dashPowerUpCanHit == true)
                 {
                     collision.gameObject.SetActive(false);
                 }
-                if(dashPowerUp != "can hit")
+                if(dashPowerUpCanHit == false)
                 {
                     Destroy(gameObject);
                     winTextObject.gameObject.SetActive(true);
@@ -260,12 +270,12 @@ public class PlayerController : MonoBehaviour
 
                 if (Shield == false)
                 {
-                    if (dashPowerUp == "can hit")
+                    if (dashPowerUpCanHit == true)
                     {
                         collision.gameObject.SetActive(false);
                     }
                     
-                    if (dashPowerUp != "can hit")
+                    if (dashPowerUpCanHit == false)
                     {
                         Destroy(gameObject);
                         winTextObject.gameObject.SetActive(true);
@@ -273,7 +283,7 @@ public class PlayerController : MonoBehaviour
                         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
                     }
                     test = 1;
-                    dashPowerUp = "can't hit";
+                    dashPowerUpCanDash = false;
 
                 }
             }
