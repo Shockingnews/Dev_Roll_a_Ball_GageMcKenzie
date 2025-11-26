@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     private bool DashTimerActive;
     public float speed = 0;
     public float speedBoost = 0;
+    static int speedPowerUpCount;
+    static int jumpPowerUpCount;
+    static int dashPowerUpCount;
+    static int powerUpCount;
     public float jumpForce;
     static bool Shield = false;
     static bool speedPowerUp = false;
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
     static bool dashPowerUpCanDash = true;
     static bool dashPowerUpCanHit = false;
     static int test;
+    
 
     
     public GameObject ChaserNum1; 
@@ -38,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public GameObject restartButton;
     public GameObject continueButton;
     static GameObject enemy;
+    public TextMeshProUGUI powerUpText;
+    public GameObject selectPowerUp;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,23 +69,55 @@ public class PlayerController : MonoBehaviour
     }
      void Update()
     {
-        
-        if (JumpPowerUp == true)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            selectPowerUp.GetComponent<TextMeshProUGUI>().text = "Dash";
+            powerUpCount = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            selectPowerUp.GetComponent<TextMeshProUGUI>().text = "Jump";
+            powerUpCount = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            selectPowerUp.GetComponent<TextMeshProUGUI>().text = "Speed Boost";
+            powerUpCount = 3;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            selectPowerUp.GetComponent<TextMeshProUGUI>().text = "Shield";
+            powerUpCount = 4;
+        }
+
+        if (powerUpCount == 2) 
+        {
+            SetCountText();
+            if (JumpPowerUp == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Vector3 jumpmovement = new Vector3(0.0f, 0.5f, 0.0f);
                 rb.AddForce(jumpmovement * jumpForce);
                 JumpPowerUp = false;
+                
+                SetCountText();
             }
         }
-        if (speedPowerUp == true)
+        }
+        if (powerUpCount == 3)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            SetCountText();
+            if (speedPowerUp == true)
             {
-                currentTime = timelasting;
-                timerActive = true;
-                speedPowerUp = false;
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    currentTime = timelasting;
+                    timerActive = true;
+                    speedPowerUp = false;
+                    
+                    SetCountText();
+                }
             }
         }
         TimeSpan dashTime = TimeSpan.FromSeconds(DashCurrentTime);
@@ -92,28 +131,29 @@ public class PlayerController : MonoBehaviour
                 DashCurrentTime = 1;
             }
         }
-        if (dashPowerUpCanDash == true) 
+        
+        if (powerUpCount == 1) 
         {
-            
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            SetCountText();
+            if (dashPowerUpCount > 0)
             {
-                Vector3 dashmovement = new Vector3(movementX, 0.0f, movementY);
-                rb.AddForce(dashmovement * 999);
-                dashPowerUpCanHit = true;
-                dashPowerUpCanDash = false;
-                DashTimerActive = true;
-                test = 2;
-                
-
-
-
-
-
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Vector3 dashmovement = new Vector3(movementX, 0.0f, movementY);
+                    rb.AddForce(dashmovement * 999);
+                    dashPowerUpCanHit = true;
+                    dashPowerUpCanDash = false;
+                    DashTimerActive = true;
+                    test = 2;
+                    
+                    dashPowerUpCount -= 1;
+                    SetCountText();
+                }
             }
-            
-
         }
+            
+        
+        
         
     }
 
@@ -204,15 +244,15 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("speedPowerUp"))
         {
             speedPowerUp = true;
-
+            speedPowerUpCount = 1;
             count = count + 1;
             other.gameObject.SetActive(false);
             SetCountText();
         }
         if (other.gameObject.CompareTag("jumpPowerUp"))
         {
-            
-            
+
+            jumpPowerUpCount += 1;
             count = count + 1;
             other.gameObject.SetActive(false);
             JumpPowerUp = true;
@@ -223,8 +263,10 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("dashPowerUp"))
         {
             dashPowerUpCanDash = true;
+            
             test = 1;
             count = count + 1;
+            dashPowerUpCount += 1;
             other.gameObject.SetActive(false);
             
             SetCountText();
@@ -244,7 +286,7 @@ public class PlayerController : MonoBehaviour
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString();
+        countText.text = "Count: " + count.ToString()+ $"/{countMax}";
         if (count >= countMax)
         {
             
@@ -255,6 +297,20 @@ public class PlayerController : MonoBehaviour
 
 
         }
+        if(powerUpCount == 1)
+        {
+            powerUpText.text = "Total PowerUps: " + dashPowerUpCount.ToString();
+        }
+        if (powerUpCount == 2)
+        {
+            powerUpText.text = "Total PowerUps: " + jumpPowerUpCount.ToString();
+        }
+        if (powerUpCount == 4)
+        {
+            powerUpText.text = "Total PowerUps: " + speedPowerUpCount.ToString();
+        }
+        
+        
     }
 
      void OnCollisionEnter(Collision collision)
@@ -277,6 +333,9 @@ public class PlayerController : MonoBehaviour
                     winTextObject.gameObject.SetActive(true);
                     restartButton.gameObject.SetActive(true);
                     winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+                    dashPowerUpCount = 0;
+                    jumpPowerUpCount = 0;
+                    speedPowerUpCount = 0;
                 }
                 
             }
@@ -301,6 +360,9 @@ public class PlayerController : MonoBehaviour
                         winTextObject.gameObject.SetActive(true);
                         restartButton.gameObject.SetActive(true);
                         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+                        dashPowerUpCount = 0;
+                        jumpPowerUpCount = 0;
+                        speedPowerUpCount = 0;
                     }
                     test = 1;
                     
