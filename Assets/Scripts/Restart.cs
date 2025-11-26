@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Restart : MonoBehaviour
 {
-     
+    static int Menu = 0;
     public void OnRestart()
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
@@ -14,6 +14,17 @@ public class Restart : MonoBehaviour
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentScene+1);
+
+    }
+    public void OnMenu()
+    {
+        
+        SceneManager.LoadScene(Menu);
+
+    }
+    public void OnQuit()
+    {
+        Application.Quit();
 
     }
 }

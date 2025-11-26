@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
     public GameObject restartButton;
     public GameObject continueButton;
+    public GameObject menuButton;
+    public GameObject quitButton;
     static GameObject enemy;
     public TextMeshProUGUI powerUpText;
     public GameObject selectPowerUp;
@@ -55,6 +57,8 @@ public class PlayerController : MonoBehaviour
         continueButton.SetActive(false);
         restartButton.SetActive(false);
         winTextObject.SetActive(false);
+        menuButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
         SetCountText();
         count = 0;
         rb = GetComponent<Rigidbody>();
@@ -292,6 +296,8 @@ public class PlayerController : MonoBehaviour
             
             winTextObject.SetActive(true);
             continueButton.gameObject.SetActive(true);
+            menuButton.gameObject.SetActive(true);
+            quitButton.gameObject.SetActive(true);
             GameObject enemy = GameObject.FindWithTag("Enemy");
             Destroy(enemy);
 
@@ -332,6 +338,8 @@ public class PlayerController : MonoBehaviour
                     Destroy(gameObject);
                     winTextObject.gameObject.SetActive(true);
                     restartButton.gameObject.SetActive(true);
+                    menuButton.gameObject.SetActive(true);
+                    quitButton.gameObject.SetActive(true);
                     winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
                     dashPowerUpCount = 0;
                     jumpPowerUpCount = 0;
@@ -359,6 +367,8 @@ public class PlayerController : MonoBehaviour
                         Destroy(gameObject);
                         winTextObject.gameObject.SetActive(true);
                         restartButton.gameObject.SetActive(true);
+                        menuButton.gameObject.SetActive(true);
+                        quitButton.gameObject.SetActive(true);
                         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
                         dashPowerUpCount = 0;
                         jumpPowerUpCount = 0;
