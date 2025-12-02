@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ParticleSystemJobs;
 
 public class PlayerController : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
     static GameObject enemy;
     public TextMeshProUGUI powerUpText;
     public GameObject selectPowerUp;
+    public ParticleSystem exsplosion;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -335,6 +337,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (dashPowerUpCanHit == false)
                 {
+                    exsplosion.Play();
                     Destroy(gameObject);
                     winTextObject.gameObject.SetActive(true);
                     restartButton.gameObject.SetActive(true);
@@ -364,6 +367,7 @@ public class PlayerController : MonoBehaviour
                     
                     if (dashPowerUpCanHit == false)
                     {
+                        exsplosion.Play();
                         Destroy(gameObject);
                         winTextObject.gameObject.SetActive(true);
                         restartButton.gameObject.SetActive(true);
