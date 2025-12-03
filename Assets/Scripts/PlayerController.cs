@@ -90,11 +90,7 @@ public class PlayerController : MonoBehaviour
             selectPowerUp.GetComponent<TextMeshProUGUI>().text = "Speed Boost";
             powerUpCount = 3;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            selectPowerUp.GetComponent<TextMeshProUGUI>().text = "Shield";
-            powerUpCount = 4;
-        }
+        
 
         if (powerUpCount == 2) 
         {
@@ -106,8 +102,8 @@ public class PlayerController : MonoBehaviour
                 Vector3 jumpmovement = new Vector3(0.0f, 0.5f, 0.0f);
                 rb.AddForce(jumpmovement * jumpForce);
                 JumpPowerUp = false;
-                
-                SetCountText();
+                    JumpPowerUpCount -= 1;
+                    SetCountText();
             }
         }
         }
@@ -121,8 +117,9 @@ public class PlayerController : MonoBehaviour
                     currentTime = timelasting;
                     timerActive = true;
                     speedPowerUp = false;
-                    
+                    speedPowerUpCount -= 1;
                     SetCountText();
+
                 }
             }
         }
@@ -292,7 +289,7 @@ public class PlayerController : MonoBehaviour
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString()+ $"/{countMax}";
+        countText.text = "Cubes collected: " + count.ToString()+ $"/{countMax}";
         if (count >= countMax)
         {
             
@@ -313,7 +310,7 @@ public class PlayerController : MonoBehaviour
         {
             powerUpText.text = "Total PowerUps: " + jumpPowerUpCount.ToString();
         }
-        if (powerUpCount == 4)
+        if (powerUpCount == 3)
         {
             powerUpText.text = "Total PowerUps: " + speedPowerUpCount.ToString();
         }
